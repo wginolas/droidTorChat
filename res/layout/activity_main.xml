@@ -26,4 +26,23 @@
         android:layout_toRightOf="@+id/btnIsRunning"
         android:text="TextView" />
 
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnIsRunning"
+        android:layout_below="@+id/btnIsRunning"
+        android:layout_marginTop="14dp"
+        android:text="Register" 
+        android:onClick="onRegister" />
+
+    <TextView
+        android:id="@+id/txtRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnRegister"
+        android:layout_alignBottom="@+id/btnRegister"
+        android:layout_toRightOf="@+id/btnIsRunning"
+        android:text="TextView"/>
+
 </RelativeLayout>
