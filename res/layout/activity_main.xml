@@ -45,4 +45,13 @@
         android:layout_toRightOf="@+id/btnIsRunning"
         android:text="TextView"/>
 
+    <TextView
+        android:id="@+id/txtLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnRegister"
+        android:layout_below="@+id/btnRegister"
+        android:layout_marginTop="14dp"
+        android:text="TextView" />
+
 </RelativeLayout>

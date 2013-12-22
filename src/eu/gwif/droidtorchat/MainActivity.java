@@ -1,6 +1,11 @@
 package eu.gwif.droidtorchat;
 
-import info.guardianproject.onionkit.OnionKitHelper;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 import info.guardianproject.onionkit.ui.OrbotHelper;
 import android.os.Bundle;
 import android.app.Activity;
@@ -21,6 +26,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		orbotHelper = new OrbotHelper(getBaseContext());
+		new Thread(new SocketListener()).start();
 	}
 
 	@Override
@@ -55,5 +61,45 @@ public class MainActivity extends Activity {
 			String host = data.getExtras().getString("hs_host");
 			text.setText(host);
 		}
+	}
+	
+	private void showLine(final String line) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+		    	TextView text = (TextView)findViewById(R.id.txtLine);
+		    	text.setText(line);
+			}
+		});		
+	}
+	
+	private class SocketListener implements Runnable {
+		@Override
+		public void run() {
+			ServerSocket serverSocket = null;
+			try {
+				serverSocket = new ServerSocket(TORCHAT_PORT);
+				while (true) {
+					Socket socket = serverSocket.accept();
+					BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					String line;
+					while (null != (line = in.readLine())) {
+						showLine(line);
+					}
+				}
+			} catch (IOException e) {
+				// Kaputt
+				showLine(e.getMessage());
+			} finally {
+				try {
+					if (serverSocket!=null) {
+						serverSocket.close();
+					}
+				} catch (IOException e) {
+					// well...
+				}
+			}
+		}
+		
 	}
 }
